@@ -1,0 +1,76 @@
+﻿<Window x:Class="Secure_file_vault.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Secure_file_vault"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Secure File Vault" FontSize="20" FontWeight="Bold"/>
+            <TextBlock Text="Шифрование и контроль целостности" FontSize="12" Foreground="Gray"/>
+        </StackPanel>
+
+        <GroupBox Grid.Row="1" Header="Управление хранилищем" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBox x:Name="VaultPathTextBox" Width="300" Margin="0,0,5,0" 
+                         Text="C:\SecureVault"/>
+                <Button x:Name="BrowseButton" Content="Обзор" Width="70" 
+                        Click="BrowseButton_Click" Margin="0,0,10,0"/>
+                <Button x:Name="OpenVaultButton" Content="Открыть хранилище" Width="120" 
+                        Click="OpenVaultButton_Click" Margin="0,0,5,0"/>
+                <Button x:Name="CreateVaultButton" Content="Создать хранилище" Width="120" 
+                        Click="CreateVaultButton_Click"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="Файлы в хранилище" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                    <Button x:Name="AddFileButton" Content="Добавить файл" Width="100" 
+                            Click="AddFileButton_Click" Margin="0,0,5,0" IsEnabled="False"/>
+                    <Button x:Name="ExtractFileButton" Content="Извлечь файл" Width="100" 
+                            Click="ExtractFileButton_Click" Margin="0,0,5,0" IsEnabled="False"/>
+                    <Button x:Name="SecureDeleteButton" Content="Безопасно удалить" Width="120" 
+                            Click="SecureDeleteButton_Click" Margin="0,0,5,0" IsEnabled="False"/>
+                    <Button x:Name="VerifyIntegrityButton" Content="Проверить целостность" Width="140" 
+                            Click="VerifyIntegrityButton_Click" Margin="0,0,5,0" IsEnabled="False"/>
+                </StackPanel>
+
+                <ListView x:Name="FilesListView" Grid.Row="1" 
+                          SelectionMode="Single" SelectionChanged="FilesListView_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Имя файла" Width="200" 
+                                            DisplayMemberBinding="{Binding OriginalFileName}"/>
+                            <GridViewColumn Header="Размер (байт)" Width="100" 
+                                            DisplayMemberBinding="{Binding OriginalFileSize}"/>
+                            <GridViewColumn Header="Дата добавления" Width="150" 
+                                            DisplayMemberBinding="{Binding AddedDate}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
+
+        <StatusBar Grid.Row="3">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText" Text="Готов к работе"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
